@@ -30,20 +30,20 @@ public class JoinMessage implements CommandExecutor {
                         player.sendMessage("reload successfully.");
                         Bukkit.getScheduler().runTaskLater((Plugin) Main.getPlugin(Main.class), new Runnable() {
                             public void run() {
-                                Main.instance.saveDefaultConfig();
-                                Main.instance.reloadConfig();
-                                Main.instance.saveConfig();
+                                Main.getInstance().saveDefaultConfig();
+                                Main.getInstance().reloadConfig();
+                                Main.getInstance().saveConfig();
                             }
                         }, 5L);
                     } else if (args[0].equalsIgnoreCase("toggle")) {
                         if (!this.instance.getConfig().getBoolean("Original-mc-join-msg")) {
-                            this.instance.getConfig().set("Original-mc-join-msg", Boolean.valueOf(true));
+                            this.instance.getConfig().set("Original-mc-join-msg", Boolean.TRUE);
                             this.instance.saveConfig();
                             this.instance.reloadConfig();
                             this.instance.saveConfig();
                             player.sendMessage(ChatColor.GREEN + "JoinMessage ENABLED!");
                         } else {
-                            this.instance.getConfig().set("Original-mc-join-msg", Boolean.valueOf(false));
+                            this.instance.getConfig().set("Original-mc-join-msg", Boolean.FALSE);
                             this.instance.saveConfig();
                             this.instance.reloadConfig();
                             this.instance.saveConfig();

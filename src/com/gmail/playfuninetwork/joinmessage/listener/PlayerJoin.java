@@ -1,6 +1,7 @@
 package com.gmail.playfuninetwork.joinmessage.listener;
 
 import com.gmail.playfuninetwork.joinmessage.Main;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -28,16 +29,28 @@ public class PlayerJoin implements Listener {
         } catch (NullPointerException e) {
             System.out.println("The Spawn must be set! /jm setspawn");
         }
-        if (orginalJoinMSG())
-            event.setJoinMessage(this.instance.getConfig().getString("OrginalJoinMSG").replace("%player%", player.getName()).replace("&", "§") + "\n");
+        if (orginalJoinMSG()){
+            String joinText = this.instance.getConfig().getString("OrginalJoinMSG").replace("&", "§");
+            if(Main.hasPlaceHolder()){
+                joinText = PlaceholderAPI.setPlaceholders(event.getPlayer(), joinText);
+            }else {
+                joinText = joinText.replace("%player%", player.getName()) + "\n";
+            }
+            event.setJoinMessage(joinText);
+        }
         if (welcomeMSG()) {
             List<String> welocmeMessage = this.instance.getConfig().getStringList("WelcomeMessage");
             StringBuilder builder = new StringBuilder();
             welocmeMessage.forEach(msg -> builder.append(msg).append("\n"));
-            player.sendMessage(builder.toString()
-                    .replace("&", "§")
-                            .replace("%line%", "\n")
-                            .replace("%player%", player.getName()));
+            if(Main.hasPlaceHolder()){
+                player.sendMessage(PlaceholderAPI.setPlaceholders(event.getPlayer(), builder.toString()).replace("&", "§"));
+            }else {
+                player.sendMessage(builder.toString()
+                        .replace("&", "§")
+                        .replace("%line%", "\n")
+                        .replace("%player%", player.getName()));
+            }
+
         }
         if (publicJoinMSG())
             checkPlayerPermission(player);
@@ -62,27 +75,46 @@ public class PlayerJoin implements Listener {
     }
 
     private void checkPlayerPermission(Player player) {
-        if (player.hasPermission("joinmessage.owner")) {
-            Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.Owner")
-                    .replace("%player%", player.getName()).replace("&", "§") + "\n"));
-        } else if (player.hasPermission("joinmessage.admin")) {
-            Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.ADMIN")
-                    .replace("%player%", player.getName()).replace("&", "§") + "\n"));
-        } else if (player.hasPermission("joinmessage.youtuber")) {
-            Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.YOUTUBER")
-                    .replace("%player%", player.getName()).replace("&", "§") + "\n"));
-        } else if (player.hasPermission("joinmessage.builder")) {
-            Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.BUILDER")
-                    .replace("%player%", player.getName()).replace("&", "§") + "\n"));
-        } else if (player.hasPermission("joinmessage.funi")) {
-            Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.FUNI")
-                    .replace("%player%", player.getName()).replace("&", "§") + "\n"));
-        } else if (player.hasPermission("joinmessage.mvp")) {
-            Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.MVP")
-                    .replace("%player%", player.getName()).replace("&", "§") + "\n"));
-        } else if (player.hasPermission("joinmessage.vip")) {
-            Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.VIP")
-                    .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+        if(Main.hasPlaceHolder()){
+            if (player.hasPermission("joinmessage.owner")) {
+                Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("PublicJoin.Owner")).replace("&", "§") + "\n");
+            } else if (player.hasPermission("joinmessage.admin")) {
+                Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("PublicJoin.Admin")).replace("&", "§") + "\n");
+            } else if (player.hasPermission("joinmessage.builder")) {
+                Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("PublicJoin.BUILDER")).replace("&", "§") + "\n");
+            } else if (player.hasPermission("joinmessage.youtuber")) {
+                Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("PublicJoin.YOUTUBER")).replace("&", "§") + "\n");
+            } else if (player.hasPermission("joinmessage.funi")) {
+                Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("PublicJoin.FUNI")).replace("&", "§")+ "\n");
+            } else if (player.hasPermission("joinmessage.mvp")) {
+                Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("PublicJoin.MVP")).replace("&", "§") + "\n");
+            } else if (player.hasPermission("joinmessage.vip")) {
+                Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("PublicJoin.VIP")).replace("&", "§") + "\n");
+            }
+        }else{
+            if (player.hasPermission("joinmessage.owner")) {
+                Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.Owner")
+                        .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+            } else if (player.hasPermission("joinmessage.admin")) {
+                Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.ADMIN")
+                        .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+            } else if (player.hasPermission("joinmessage.builder")) {
+                Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.BUILDER")
+                        .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+            } else if (player.hasPermission("joinmessage.youtuber")) {
+                Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.YOUTUBER")
+                        .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+            } else if (player.hasPermission("joinmessage.funi")) {
+                Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.FUNI")
+                        .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+            } else if (player.hasPermission("joinmessage.mvp")) {
+                Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.MVP")
+                        .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+            } else if (player.hasPermission("joinmessage.vip")) {
+                Bukkit.broadcastMessage(String.valueOf(this.instance.getConfig().getString("PublicJoin.VIP")
+                        .replace("%player%", player.getName()).replace("&", "§") + "\n"));
+            }
         }
+
     }
 }

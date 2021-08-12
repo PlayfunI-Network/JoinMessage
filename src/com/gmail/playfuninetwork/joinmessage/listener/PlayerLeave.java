@@ -1,6 +1,7 @@
 package com.gmail.playfuninetwork.joinmessage.listener;
 
 import com.gmail.playfuninetwork.joinmessage.Main;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,12 @@ public class PlayerLeave implements Listener {
             event.setQuitMessage(null);
             return;
         }
-        event.setQuitMessage(this.instance.getConfig().getString("OrginalLeaveMSG").replace("%player%", player.getName()).replace("&", "§"));
+        if(Main.hasPlaceHolder()){
+            event.setQuitMessage(PlaceholderAPI.setPlaceholders(player, this.instance.getConfig().getString("OrginalLeaveMSG").replace("&", "§")));
+        }else {
+            event.setQuitMessage(this.instance.getConfig().getString("OrginalLeaveMSG").replace("%player%", player.getName()).replace("&", "§"));
+        }
+
     }
 
     boolean orginalLeaveMSG() {

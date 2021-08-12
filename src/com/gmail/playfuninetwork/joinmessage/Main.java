@@ -18,7 +18,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public class Main extends JavaPlugin {
-    public static Main instance;
+    private static Main instance;
+
+    private static boolean placeholder = false;
 
     public ConfigManager configManager;
 
@@ -43,6 +45,10 @@ public class Main extends JavaPlugin {
         this.locationManager = new LocationManager();
         registerCommands();
         registerListener();
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            placeholder = true;
+        }
     }
 
     public void onDisable() {
@@ -69,5 +75,9 @@ public class Main extends JavaPlugin {
 
     public LocationManager getLocationManager() {
         return this.locationManager;
+    }
+
+    public static boolean hasPlaceHolder(){
+        return placeholder;
     }
 }
