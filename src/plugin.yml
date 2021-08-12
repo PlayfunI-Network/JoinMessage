@@ -1,0 +1,8 @@
+name: JoinMessage
+main: com.gmail.playfuninetwork.joinmessage.Main
+version: 1.0
+author: PlayfunI Network
+softdepend: PlaceholderAPI
+commands:
+  joinmessage:
+    aliases: "jm"

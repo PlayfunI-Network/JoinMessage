@@ -1,0 +1,31 @@
+Original-mc-join-msg: false
+OrginalJoinMSG: '&7The Player &b%player% joined.'
+Original-mc-leave-msg: false
+OrginalLeaveMSG: '&7The Player &b%player% leaved.'
+personal-join-msg: true
+WelcomeMessage:
+  - '&8&m+---------------***---------------+&6'
+  - ' &a'
+  - '&7        歡迎回到伺服器, &b&n%player%&7!'
+  - ' &b'
+  - '&6  伺服器商店&f: link.playfuni.net/BuyRank'
+  - '&6  Discord&f:   link.playfuni.net/Discord'
+  - ' &c'
+  - '&8&m+---------------***---------------+&6'
+public-join-msg: true
+PublicJoin:
+  Owner: '&6>>&5 [服主] %player%&6 進入了伺服器!'
+  VIP: '&6>> &a[VIP] %player%&6 進入了伺服器!'
+  MVP: '&6>> &b[MVP] %player%&6 進入了伺服器!'
+  FUNI: '&6>> &d[FUNI] %player% 進入了伺服器!'
+  BUILDER: '&6>>&6 [建築師] %player%&6 進入了伺服器!'
+  ADMIN: '&6>>&c [管理員] %player%&6 進入了伺服器!'
+  YOUTUBER: '&6>> &c[&f創作者&c] %player%&6 進入了伺服器!'
+Sound: CAT_MEOW
+Lobby_Spawn:
+  world: Hub
+  x: 0.969552876684534
+  y: 50.30805452759109
+  z: -0.5930600375965637
+  yaw: -0.76394653
+  pitch: 1.9496533
