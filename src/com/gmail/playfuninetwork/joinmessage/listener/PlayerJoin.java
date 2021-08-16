@@ -21,13 +21,13 @@ public class PlayerJoin implements Listener {
         try {
             player.playSound(player.getLocation(), Sound.valueOf(this.instance.getConfig().getString("Sound")), 5.0F, 5.0F);
         } catch (Exception e) {
-            System.out.println("You have to select a Sound!");
+//            System.out.println("You have to select a Sound!");
         }
         try {
             if (this.instance.locationManager.getMiddle("Lobby") != null)
                 player.teleport(this.instance.locationManager.getMiddle("Lobby"));
         } catch (NullPointerException e) {
-            System.out.println("The Spawn must be set! /jm setspawn");
+//            System.out.println("The Spawn must be set! /jm setspawn");
         }
         if (orginalJoinMSG()){
             String joinText = this.instance.getConfig().getString("OrginalJoinMSG").replace("&", "§");
